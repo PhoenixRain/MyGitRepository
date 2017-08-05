@@ -1,23 +1,39 @@
 package test;
 
-
-
 /*
  * 对src数组进行排序，并且去重，元素不能为Integer.MIN_VALUE
  */
 
 public class DistinctSort {
 	private int[] src = {2, 4, 8, 2, 3, 5, 9, 8, 4};
-	
-	
+
 	private int indexOfcurrentMinValue;  //当前最小元素的索引
 	private int last = Integer.MIN_VALUE;  //第一次排序遍历是最小元素值为Integer.MIN_VALUEֵ
+
+	public static void main(String[] args) {
+		new DistinctSort().sortAndDeleteRepeatedValue();
+	}
+
+	private void sortAndDeleteRepeatedValue(){
+		int i;
+		for(i = 0; i<src.length; i++){
+			indexOfcurrentMinValue = findCurrentMinElementIndex(i);
+			//当indexOfcurrentMinValue值为-1，表示排序结束
+			if(indexOfcurrentMinValue == -1)
+				break;
+			swap(i, indexOfcurrentMinValue);
+			last = src[i];
+		}
+		//打印src数组从0到i-1索引处的值，即src前i个元素
+		printArray(i);
+
+	}
 	
 	/**
 	 * 获得src数组从i索引处开始，最小元素的索引，且保证该索引对应元素值大于last
 	 */
 	private int findCurrentMinElementIndex(int i){
-		int j = 0;
+		int j;
 		int temp = 0;
 		for(j = i; j<src.length; j++){
 			if(src[j]>last){
@@ -36,20 +52,7 @@ public class DistinctSort {
 		}
 		return temp;
 	}
-	public void sortAndDeleteRepeatedValue(){
-		int i;
-		for(i = 0; i<src.length; i++){
-			indexOfcurrentMinValue = findCurrentMinElementIndex(i);
-			//当indexOfcurrentMinValue值为-1，表示排序结束
-			if(indexOfcurrentMinValue == -1)
-				break;
-			swap(i, indexOfcurrentMinValue);
-			last = src[i];
-		}
-		//打印src数组从0到i-1索引处的值，即src前i个元素
-		printArray(i);
-		
-	}
+
 	/**
 	 * 打印src数组从0到i-1索引处的值，即src前i个元素
 	 */
@@ -73,11 +76,6 @@ public class DistinctSort {
 		int temp = src[i];
 		src[i] = src[j];
 		src[j] = temp;
-	}
-	
-
-	public static void main(String[] args) {
-		new DistinctSort().sortAndDeleteRepeatedValue();
 	}
 
 }
